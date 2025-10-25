@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres
+    container_name: parcial-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - db_data:/var/lib/postgresql
+    networks:
+      - app_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    container_name: parcial-api
+    ports:
+      - "${PORT}:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app_net
+    environment:
+      DB_HOST: db
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: ${POSTGRES_DB}
+
+volumes:
+  db_data:
+
+networks:
+  app_net:
+
