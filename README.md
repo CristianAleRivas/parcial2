@@ -146,22 +146,22 @@ curl http://localhost:3000/health
 ```
 Validaciones realizadas
 
-docker-compose.yml funcional con versión 3.8.
+-docker-compose.yml funcional con versión 3.8.
 
-Red app_net creada automáticamente.
+-Red app_net creada automáticamente.
 
-Comunicación correcta entre servicios api y db.
+-Comunicación correcta entre servicios api y db.
 
-Healthcheck de PostgreSQL funcionando (healthy).
+-Healthcheck de PostgreSQL funcionando (healthy).
 
-API responde correctamente y se conecta a la base de datos.
+-API responde correctamente y se conecta a la base de datos.
 
-Evidencias documentadas en docs/evidencias.
+-Evidencias documentadas en docs/evidencias.
 
 Referencias
 
-Node.js
+-Node.js
 
-Docker
+-Docker
 
-Docker Compose
+-Docker Compose
