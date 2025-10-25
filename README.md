@@ -2,8 +2,8 @@
 
 ## Estudiante
 - **Nombre:** Cristian Alejandro Rivas Rodríguez
-- **Expediente:** TU_EXPEDIENTE
-- **Código Estudiantil:** TU_CODIGO_ESTUDIANTIL
+- **Expediente:** 25721
+- **Código Estudiantil:** RR22-I04-001
 
 ---
 
@@ -71,3 +71,22 @@ INSERT INTO estudiantes (nombre, codigo) VALUES
 # Verificar persistencia
 docker restart parcial-db
 docker exec -it parcial-db psql -U admin -d parcial_db -c "SELECT * FROM estudiantes;"
+
+### Ejercicio 3 – Integración con Docker Compose
+Objetivo
+Integrar los servicios en un único archivo docker-compose.yml con red, dependencias y healthcheck.
+Archivos creados
+.env
+
+docker-compose.yml
+YAMLservices:  db:    image: postgres    container_name: parcial-db    environment:      POSTGRES_USER: ${POSTGRES_USER}      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}      POSTGRES_DB: ${POSTGRES_DB}    volumes:      - db_data:/var/lib/postgresql    networks:      - app_net    healthcheck:      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]      interval: 10s      timeout: 5s      retries: 5  api:    build: .    container_name: parcial-api    ports:      - "${PORT}:3000"    depends_on:      db:        condition: service_healthy    networks:      - app_net    environment:      DB_HOST: db      DB_USER: ${POSTGRES_USER}      DB_PASSWORD: ${POSTGRES_PASSWORD}      DB_NAME: ${POSTGRES_DB}volumes:  db_data:networks:  app_net:Mostrar más líneas
+Comandos utilizados
+Shelldocker compose up -d --builddocker psdocker inspect --format='{{json .State.Health}}' parcial-dbcurl http://localhost:3000/curl http://localhost:3000/healthMostrar más líneas
+Validaciones realizadas
+
+docker-compose.yml funcional con versión 3.8 (aunque se recomienda omitir version en versiones recientes).
+Red app_net creada automáticamente.
+Servicios api y db comunicándose correctamente.
+healthcheck de PostgreSQL funcionando (healthy).
+API responde correctamente y se conecta a la base de datos.
+Evidencias documentadas en docs/evidencias.
