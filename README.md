@@ -7,7 +7,7 @@
 
 ---
 
-## 🧪 Ejercicio 1 – Servicio Base con Dockerfile
+## 🧪 Ejercicio 1 y 2 – Servicio Base con Dockerfile
 
 ### Objetivo
 Construir un servicio Node.js funcional y contenerizado con un Dockerfile optimizado.
@@ -72,7 +72,7 @@ INSERT INTO estudiantes (nombre, codigo) VALUES
 docker restart parcial-db
 docker exec -it parcial-db psql -U admin -d parcial_db -c "SELECT * FROM estudiantes;"
 
-### Ejercicio 3 – Integración con Docker Compose
+## Ejercicio 3 – Integración con Docker Compose
 Objetivo
 Integrar los servicios en un único archivo docker-compose.yml con red, dependencias y healthcheck.
 Archivos creados
